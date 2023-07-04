@@ -36,13 +36,19 @@
     $flag_name = false;
     $flag_eta = false;
     $flag_email = false;
-    if(inste($_GET['nome']) && inste($_GET['eta']) && inste($_GET['email'])){
+    if(isset($_GET['nome']) && isset($_GET['eta']) && isset($_GET['email'])){
         // SE LA CONDIZIONE CHE IL NOME HA LUNGHEZZA A 3 CARATTERI E RISPETTATA ALLORA IMPOSTO LA VARIABILE DI CONTROLLO A TRUE;
         if(strlen($_GET['nome']) > 3){
-            $flag_name = tue;
+            $flag_name = true;
         }
         //VERIFICO CHE LA EMAIL ABBIA SIA LA CHICCIOLA CHE IL PUNTO , SE VERA LA CONDIZIONE IMPOSTO LA VARIABILE A TUE
-        if()
+        if(str_contains($_GET['email'],'@') && str_contains($_GET['email'],'.')){
+            $flag_email = true;
+        }
+        // VERIFICA CHE L'ETA PASSATA SIA U NUMERO . SE E VERA LA CONDIZIONE ALLORA IMPOSTO LA VARIABILE DI CONTROLLO A TRUE 
+        if(is_numeric($_GET['eta'])){
+            $flag_eta = true;
+        }
     }
 
 ?>
@@ -74,6 +80,19 @@
                 <button type="submit">Invia</button>
             </form>
         </div>
+        <?php  if(isset($_GET['nome']) && isset($_GET['eta']) && isset($_GET['email'])){ ?>
+            <div>
+                <h2>
+                    <?php if($flag_email && $flag_eta && $flag_name){
+                        echo 'Acesso riuscito';
+                    }
+                    else{
+                        echo 'Acesso negato';
+                    }
+                    ?>
+                </h2>
+            </div>
+        <?php } ?>  
     </div>
     
 </body>
